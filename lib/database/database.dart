@@ -38,17 +38,25 @@ class DBHelper{
     List<Map> list = await dbClient.rawQuery('SELECT * FROM Employee');
     List<Employee> employees = new List();
     for (int i = 0; i < list.length; i++) {
-      employees.add(new Employee(list[i]["firstname"], list[i]["lastname"], list[i]["mobileno"], list[i]["emailid"]));
+      employees.add(new Employee(list[i]["id"], list[i]["firstname"], list[i]["lastname"], list[i]["mobileno"], list[i]["emailId"]));
     }
     print(employees.length);
     return employees;
+  }
+
+  // Deletes the row specified by the id. The number of affected rows is
+  // returned. This should be 1 as long as the row exists.
+  Future<int> deleteEmployee(int id) async {
+    var dbClient = await db;
+    await dbClient.rawQuery('DELETE FROM Employee WHERE id=$id');
+    return id;
   }
 
   void saveEmployee(Employee employee) async {
     var dbClient = await db;
     await dbClient.transaction((txn) async {
       return await txn.rawInsert(
-          'INSERT INTO Employee(firstname, lastname, mobileno, emailid ) VALUES(' +
+          'INSERT INTO Employee(firstname, lastname, mobileno, emailId ) VALUES(' +
               '\'' +
               employee.firstName +
               '\'' +

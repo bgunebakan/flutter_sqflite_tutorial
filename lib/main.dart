@@ -10,11 +10,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
-      title: 'SQFLite DataBase Demo',
+      title: 'SQFLite Demo App',
       theme: new ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.green,
       ),
-      home: new MyHomePage(title: 'Flutter Demo Home Page'),
+      home: new MyHomePage(title: 'Home Page'),
     );
   }
 }
@@ -29,7 +29,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
-  Employee employee = new Employee("", "", "", "");
+  Employee employee = new Employee(0,"", "", "", "");
 
   String firstname;
   String lastname;
@@ -44,11 +44,11 @@ class _MyHomePageState extends State<MyHomePage> {
     return new Scaffold(
       key: scaffoldKey,
       appBar: new AppBar(
-          title: new Text('Saving Employee'),
+          title: new Text('New Employee'),
           actions: <Widget>[
             new IconButton(
               icon: const Icon(Icons.view_list),
-              tooltip: 'Next choice',
+              tooltip: 'List of Employees',
               onPressed: () {
                 navigateToEmployeeList();
               },
@@ -65,14 +65,14 @@ class _MyHomePageState extends State<MyHomePage> {
                 keyboardType: TextInputType.text,
                 decoration: new InputDecoration(labelText: 'First Name'),
                 validator: (val) =>
-                val.length == 0 ?"Enter FirstName" : null,
+                val.length == 0 ?"Enter First Name" : null,
                 onSaved: (val) => this.firstname = val,
               ),
               new TextFormField(
                 keyboardType: TextInputType.text,
                 decoration: new InputDecoration(labelText: 'Last Name'),
                 validator: (val) =>
-                val.length ==0 ? 'Enter LastName' : null,
+                val.length ==0 ? 'Enter Last Name' : null,
                 onSaved: (val) => this.lastname = val,
               ),
               new TextFormField(
@@ -90,7 +90,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 onSaved: (val) => this.emailId = val,
               ),
               new Container(margin: const EdgeInsets.only(top: 10.0),child: new RaisedButton(onPressed: _submit,
-                child: new Text('Login'),),)
+                child: new Text('Create'),),)
 
             ],
           ),
@@ -104,7 +104,8 @@ class _MyHomePageState extends State<MyHomePage> {
     }else{
       return null;
     }
-    var employee = Employee(firstname,lastname,mobileno,emailId);
+    var employee = Employee(0, firstname,lastname,mobileno,emailId);
+    print(employee.emailId);
     var dbHelper = DBHelper();
     dbHelper.saveEmployee(employee);
     _showSnackBar("Data saved successfully");
