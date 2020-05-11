@@ -20,7 +20,7 @@ class DBHelper{
   initDb() async {
     io.Directory documentsDirectory = await getApplicationDocumentsDirectory();
     String path = join(documentsDirectory.path, "test.db");
-    var theDb = await openDatabase(path, version: 1, onCreate: _onCreate);
+    var theDb = await openDatabase(path, version: 2, onCreate: _onCreate);
     return theDb;
   }
 
@@ -28,9 +28,10 @@ class DBHelper{
   void _onCreate(Database db, int version) async {
     // When creating the db, create the table
     await db.execute(
-        "CREATE TABLE Employee(id INTEGER PRIMARY KEY, firstname TEXT, lastname TEXT, mobileno TEXT,emailId TEXT )");
+        "CREATE TABLE Employee(id INTEGER PRIMARY KEY, firstname TEXT, lastname TEXT, mobileno TEXT,email TEXT )");
     print("Created tables");
   }
+
 
   // Retrieving employees from Employee Tables
   Future<List<Employee>> getEmployees() async {
@@ -38,7 +39,7 @@ class DBHelper{
     List<Map> list = await dbClient.rawQuery('SELECT * FROM Employee');
     List<Employee> employees = new List();
     for (int i = 0; i < list.length; i++) {
-      employees.add(new Employee(list[i]["id"], list[i]["firstname"], list[i]["lastname"], list[i]["mobileno"], list[i]["emailId"]));
+      employees.add(new Employee(list[i]["id"], list[i]["firstname"], list[i]["lastname"], list[i]["mobileno"], list[i]["email"]));
     }
     print(employees.length);
     return employees;
@@ -56,7 +57,7 @@ class DBHelper{
     var dbClient = await db;
     await dbClient.transaction((txn) async {
       return await txn.rawInsert(
-          'INSERT INTO Employee(firstname, lastname, mobileno, emailId ) VALUES(' +
+          'INSERT INTO Employee(firstname, lastname, mobileno, email ) VALUES(' +
               '\'' +
               employee.firstName +
               '\'' +
@@ -70,7 +71,7 @@ class DBHelper{
               '\'' +
               ',' +
               '\'' +
-              employee.emailId +
+              employee.email +
               '\'' +
               ')');
     });

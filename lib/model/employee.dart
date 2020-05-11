@@ -4,8 +4,8 @@ class Employee{
   String firstName;
   String lastName;
   String mobileNo;
-  String emailId;
+  String email;
 
-  Employee(this.id, this.firstName, this.lastName,this.mobileNo,this.emailId);
+  Employee(this.id, this.firstName, this.lastName,this.mobileNo,this.email);
 
 }

@@ -33,7 +33,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   String firstname;
   String lastname;
-  String emailId;
+  String email;
   String mobileno;
   final scaffoldKey = new GlobalKey<ScaffoldState>();
   final formKey = new GlobalKey<FormState>();
@@ -77,21 +77,20 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               new TextFormField(
                 keyboardType: TextInputType.phone,
-                decoration: new InputDecoration(labelText: 'Mobile No'),
+                decoration: new InputDecoration(labelText: 'Phone'),
                 validator: (val) =>
-                val.length ==0 ? 'Enter Mobile No' : null,
+                val.length ==0 ? 'Enter Phone' : null,
                 onSaved: (val) => this.mobileno = val,
               ),
               new TextFormField(
                 keyboardType: TextInputType.emailAddress,
-                decoration: new InputDecoration(labelText: 'Email Id'),
+                decoration: new InputDecoration(labelText: 'Email'),
                 validator: (val) =>
-                val.length ==0 ? 'Enter Email Id' : null,
-                onSaved: (val) => this.emailId = val,
+                val.length ==0 ? 'Enter Email' : null,
+                onSaved: (val) => this.email = val,
               ),
               new Container(margin: const EdgeInsets.only(top: 10.0),child: new RaisedButton(onPressed: _submit,
                 child: new Text('Create'),),)
-
             ],
           ),
         ),
@@ -104,11 +103,11 @@ class _MyHomePageState extends State<MyHomePage> {
     }else{
       return null;
     }
-    var employee = Employee(0, firstname,lastname,mobileno,emailId);
-    print(employee.emailId);
+    var employee = Employee(0, firstname,lastname,mobileno,email);
     var dbHelper = DBHelper();
     dbHelper.saveEmployee(employee);
-    _showSnackBar("Data saved successfully");
+    formKey.currentState.reset();
+    _showSnackBar("New Employee created successfully.");
   }
 
   void _showSnackBar(String text) {

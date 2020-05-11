@@ -39,8 +39,8 @@ class MyEmployeeListPageState extends State<MyEmployeeList> {
                   itemCount: snapshot.data.length,
                   itemBuilder: (context, index) {
                     String email = "";
-                    if(snapshot.data[index].emailId != null){
-                      email = snapshot.data[index].emailId;
+                    if(snapshot.data[index].email != null){
+                      email = snapshot.data[index].email;
                     }
                     final item = snapshot.data[index];
                     return Dismissible(
@@ -101,7 +101,17 @@ class MyEmployeeListPageState extends State<MyEmployeeList> {
                           onTap: () {
                             print(snapshot.data[index].firstName + " " + snapshot.data[index].lastName +  " clicked");
                           },
-                          child: ListTile(title: Text(snapshot.data[index].firstName + " " + snapshot.data[index].lastName)),
+                          //child: ListTile(title: Text(snapshot.data[index].firstName + " " + snapshot.data[index].lastName)),
+                          child: ListTile(
+                            leading: new Hero(
+                              tag: index,
+                              child: new CircleAvatar(
+                                backgroundImage: new AssetImage('assets/profile.jpg'),
+                              ),
+                            ),
+                            title: new Text(snapshot.data[index].firstName + " " + snapshot.data[index].lastName),
+                            subtitle: new Text("Tel: " + snapshot.data[index].mobileNo + "\n E-mail: " + snapshot.data[index].email),
+                          ),
 
                     ),
                     );
