@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:fluttersqflite/model/employee.dart';
 import 'dart:async';
 import 'package:fluttersqflite/database/database.dart';
+import 'package:fluttersqflite/employeedetails.dart';
+
 
 Future<List<Employee>> fetchEmployeesFromDatabase() async {
   var dbHelper = DBHelper();
@@ -89,8 +91,10 @@ class MyEmployeeListPageState extends State<MyEmployeeList> {
                           return res;
                         } else {
                           // TODO: Navigate to edit page;
-                          Scaffold.of(context)
-                              .showSnackBar(SnackBar(content: Text(snapshot.data[index].firstName + " " + snapshot.data[index].lastName + "  edit page.")));
+                          Navigator.push(
+                            context,
+                            new MaterialPageRoute(builder: (context) => new EmployeeDetails(employee: snapshot.data[index])),
+                          );
                           return false;
                         }
                       },
@@ -110,7 +114,7 @@ class MyEmployeeListPageState extends State<MyEmployeeList> {
                               ),
                             ),
                             title: new Text(snapshot.data[index].firstName + " " + snapshot.data[index].lastName),
-                            subtitle: new Text("Tel: " + snapshot.data[index].mobileNo + "\n E-mail: " + snapshot.data[index].email),
+                            subtitle: new Text("Tel: " + snapshot.data[index].mobileNo),
                           ),
 
                     ),
