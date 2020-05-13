@@ -3,7 +3,7 @@ import 'package:fluttersqflite/model/employee.dart';
 import 'dart:async';
 import 'package:fluttersqflite/database/database.dart';
 import 'package:fluttersqflite/employeedetails.dart';
-
+import 'package:fluttersqflite/employeeedit.dart';
 
 Future<List<Employee>> fetchEmployeesFromDatabase() async {
   var dbHelper = DBHelper();
@@ -90,10 +90,10 @@ class MyEmployeeListPageState extends State<MyEmployeeList> {
                               });
                           return res;
                         } else {
-                          // TODO: Navigate to edit page;
+                          // Navigate to edit page;
                           Navigator.push(
                             context,
-                            new MaterialPageRoute(builder: (context) => new EmployeeDetails(employee: snapshot.data[index])),
+                            new MaterialPageRoute(builder: (context) => new EmployeeEdit(employee: snapshot.data[index])),
                           );
                           return false;
                         }
@@ -103,7 +103,11 @@ class MyEmployeeListPageState extends State<MyEmployeeList> {
                       secondaryBackground: slideLeftBackground(),
                       child: InkWell(
                           onTap: () {
-                            print(snapshot.data[index].firstName + " " + snapshot.data[index].lastName +  " clicked");
+                            //print(snapshot.data[index].firstName + " " + snapshot.data[index].lastName +  " clicked");
+                            Navigator.push(
+                              context,
+                              new MaterialPageRoute(builder: (context) => new EmployeeDetails(employee: snapshot.data[index])),
+                            );
                           },
                           //child: ListTile(title: Text(snapshot.data[index].firstName + " " + snapshot.data[index].lastName)),
                           child: ListTile(

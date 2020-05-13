@@ -41,7 +41,7 @@ class DBHelper{
     for (int i = 0; i < list.length; i++) {
       employees.add(new Employee(list[i]["id"], list[i]["firstname"], list[i]["lastname"], list[i]["mobileno"], list[i]["email"]));
     }
-    print(employees.length);
+    //print(employees.length);
     return employees;
   }
 
@@ -77,5 +77,17 @@ class DBHelper{
     });
   }
 
+  void updateEmployee(Employee employee) async {
+    var dbClient = await db;
+    await dbClient.transaction((txn) async {
+      return await txn.rawInsert(
+          'UPDATE Employee SET firstname = "'+ employee.firstName +
+              '" , lastname = "' + employee.lastName +
+              '" , mobileno = "' + employee.mobileNo +
+              '" , email = "' + employee.email +
+              '" WHERE id = ' + employee.id.toString() + ';');
+
+    });
+  }
 
 }

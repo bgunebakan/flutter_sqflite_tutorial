@@ -3,14 +3,13 @@ import 'package:fluttersqflite/model/employee.dart';
 import 'dart:ui' as ui;
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'dart:async';
+import 'package:fluttersqflite/employeeedit.dart';
+
 
 class EmployeeDetails extends StatelessWidget {
 
-  // Declare a field that holds the Todo.
   final Employee employee;
 
-  // In the constructor, require a Todo.
   EmployeeDetails({Key key, @required this.employee}) : super(key: key);
 
   @override
@@ -70,11 +69,22 @@ class EmployeeDetails extends StatelessWidget {
                     ),
                   ],),
                 new Divider(height: _height/30,color: Colors.white),
-                new Padding(padding: new EdgeInsets.only(left: _width/8, right: _width/8), child: new FlatButton(onPressed: (){},
-                  child: new Container(child: new Row(mainAxisAlignment: MainAxisAlignment.center,children: <Widget>[
-                    new Icon(Icons.person),
-                    new SizedBox(width: _width/30,),
-                    new Text('Edit')
+                new Padding(
+                  padding: new EdgeInsets.only(
+                      left: _width/8,
+                      right: _width/8),
+                  child: new FlatButton(
+                    onPressed: (){
+                      // Navigate to edit page;
+                      Navigator.push(
+                        context,
+                        new MaterialPageRoute(builder: (context) => new EmployeeEdit(employee: employee)),
+                      );
+                    },
+                    child: new Container(child: new Row(mainAxisAlignment: MainAxisAlignment.center,children: <Widget>[
+                      new Icon(Icons.person),
+                      new SizedBox(width: _width/30,),
+                      new Text('Edit')
                   ],)),color: Colors.blue[50],),),
               ],
             ),
